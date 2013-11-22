@@ -7,6 +7,8 @@
 //
 
 #import "PKDataManager.h"
+#import "LOLDatabase.h"
+#import "AFHTTPSessionManager.h"
 
 @implementation PKDataManager
 
