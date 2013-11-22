@@ -22,6 +22,7 @@
 		0FE45EF4183F79D80004E2D1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FE45ED3183F79D80004E2D1 /* UIKit.framework */; };
 		0FE45EFC183F79D80004E2D1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0FE45EFA183F79D80004E2D1 /* InfoPlist.strings */; };
 		0FE45EFE183F79D80004E2D1 /* ReactionTimeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE45EFD183F79D80004E2D1 /* ReactionTimeTests.m */; };
+		0FE45F09183FBD460004E2D1 /* PKDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FE45F08183FBD460004E2D1 /* PKDataManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,8 @@
 		0FE45EF9183F79D80004E2D1 /* ReactionTimeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ReactionTimeTests-Info.plist"; sourceTree = "<group>"; };
 		0FE45EFB183F79D80004E2D1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0FE45EFD183F79D80004E2D1 /* ReactionTimeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReactionTimeTests.m; sourceTree = "<group>"; };
+		0FE45F07183FBD460004E2D1 /* PKDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKDataManager.h; sourceTree = "<group>"; };
+		0FE45F08183FBD460004E2D1 /* PKDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKDataManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +125,8 @@
 				0FE45EE5183F79D80004E2D1 /* PKMainViewController.m */,
 				0FE45EE7183F79D80004E2D1 /* PKFlipsideViewController.h */,
 				0FE45EE8183F79D80004E2D1 /* PKFlipsideViewController.m */,
+				0FE45F07183FBD460004E2D1 /* PKDataManager.h */,
+				0FE45F08183FBD460004E2D1 /* PKDataManager.m */,
 				0FE45EEA183F79D80004E2D1 /* Images.xcassets */,
 				0FE45ED6183F79D80004E2D1 /* Supporting Files */,
 			);
@@ -257,6 +262,7 @@
 			files = (
 				0FE45EE6183F79D80004E2D1 /* PKMainViewController.m in Sources */,
 				0FE45EDC183F79D80004E2D1 /* main.m in Sources */,
+				0FE45F09183FBD460004E2D1 /* PKDataManager.m in Sources */,
 				0FE45EE0183F79D80004E2D1 /* PKAppDelegate.m in Sources */,
 				0FE45EE9183F79D80004E2D1 /* PKFlipsideViewController.m in Sources */,
 			);
