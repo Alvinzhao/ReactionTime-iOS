@@ -8,13 +8,15 @@
 
 #import "PKFlipsideViewController.h"
 
-@interface PKMainViewController : UIViewController <PKFlipsideViewControllerDelegate>
+@interface PKMainViewController : UIViewController <PKFlipsideViewControllerDelegate, UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIButton *startBtn;
-@property (strong, nonatomic) IBOutlet UIButton *tapBtn;
-@property (strong, nonatomic) IBOutlet UILabel *resultsLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *target;
+
+@property (strong, nonatomic) IBOutlet UILabel *resultTimeLabel;
+@property (strong, nonatomic) IBOutlet UILabel *resultAccuracyLabel;
 
 - (IBAction)startTest:(id)sender;
-- (IBAction)endTimer:(id)sender;
+- (void)wasTapped:(UITapGestureRecognizer *)sender;
 
 @end
