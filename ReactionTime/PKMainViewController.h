@@ -10,7 +10,7 @@
 
 @interface PKMainViewController : UIViewController <PKFlipsideViewControllerDelegate, UIGestureRecognizerDelegate>
 
-@property (strong, nonatomic) IBOutlet UIButton *startBtn;
+@property (strong, nonatomic) IBOutlet UILabel *helpText;
 @property (strong, nonatomic) IBOutlet UIImageView *target;
 
 @property (strong, nonatomic) IBOutlet UILabel *resultTimeLabel;
@@ -18,7 +18,6 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *countdownLabel;
 
-- (IBAction)startTest:(id)sender;
 - (void)wasTapped:(UITapGestureRecognizer *)sender;
 
 @end

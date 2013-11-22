@@ -24,6 +24,9 @@ CGPoint targetPosition;
 	// Do any additional setup after loading the view, typically from a nib.
     self.target.hidden = YES;
     self.countdownLabel.hidden = YES;
+    self.resultAccuracyLabel.hidden = YES;
+    self.resultTimeLabel.hidden = YES;
+    self.helpText.hidden = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,11 +51,11 @@ CGPoint targetPosition;
 
 #pragma mark -
 
-- (IBAction)startTest:(id)sender
+- (void)startTest
 {
     self.resultTimeLabel.hidden = YES;
     self.resultAccuracyLabel.hidden = YES;
-    self.startBtn.hidden = YES;
+    self.helpText.hidden = YES;
     self.target.hidden = YES;
     
     self.countdownLabel.text = @"3";
@@ -87,40 +90,54 @@ CGPoint targetPosition;
     targetPosition = CGPointMake(x, y);
     self.target.center = targetPosition;
     self.target.hidden = NO;
-//    self.tapBtn.backgroundColor = [UIColor colorWithRed:38.0/255.0 green:235.0/255.0 blue:51.0/255.0 alpha:1.0];
 }
 
 - (void)wasTapped:(UITapGestureRecognizer *)sender
 {
-    CGPoint loc = [sender locationInView:self.view];
-    [self targetWasTapped:loc];
+    if(self.target.hidden == NO) {
+        CGPoint loc = [sender locationInView:self.view];
+        [self targetWasTapped:loc];
+    } else {
+        [self startTest];
+    }
 }
 
 - (void)targetWasTapped:(CGPoint)tapLocation
 {
-    if(self.target.hidden == NO) {
-        NSLog(@"Tapped!");
-        NSLog(@"Scheduled Date: %@", targetDate);
-        NSLog(@"Target Position: %.0f, %.0f", self.target.center.x, self.target.center.y);
-        NSLog(@"Tap Position: %.0f, %.0f", tapLocation.x, tapLocation.y);
+    NSLog(@"Tapped!");
+    NSLog(@"Scheduled Date: %@", targetDate);
+    NSLog(@"Target Position: %.0f, %.0f", self.target.center.x, self.target.center.y);
+    NSLog(@"Tap Position: %.0f, %.0f", tapLocation.x, tapLocation.y);
 
-        NSTimeInterval diff = [NSDate.date timeIntervalSinceDate:targetDate];
-        NSLog(@"Time Diff: %.0fms", diff * 1000.0);
-        NSLog(@"Location Diff: %.0f, %.0f", tapLocation.x - self.target.center.x, tapLocation.y - self.target.center.y);
-        
-        float accuracyScore = abs(tapLocation.x - self.target.center.x) + abs(tapLocation.y - self.target.center.y);
-        
-        self.resultTimeLabel.text = [NSString stringWithFormat:@"%.0fms", round(fabs(diff) * 1000.0)];
-        self.resultAccuracyLabel.text = [NSString stringWithFormat:@"%.0f", accuracyScore];
-        
-        self.resultTimeLabel.hidden = NO;
-        self.resultAccuracyLabel.hidden = NO;
-        self.startBtn.hidden = NO;
-        self.target.hidden = YES;
+    NSTimeInterval timeDiff = [NSDate.date timeIntervalSinceDate:targetDate];
+    NSLog(@"Time Diff: %.0fms", timeDiff * 1000.0);
+    NSLog(@"Location Diff: %.0f, %.0f", tapLocation.x - self.target.center.x, tapLocation.y - self.target.center.y);
 
-        [timer invalidate];
-        timer = nil;
-    }
+    CGPoint worstPossibleDiff = CGPointMake(MAX(self.target.center.x, self.view.frame.size.width - self.target.center.x),
+                                            MAX(self.target.center.y, self.view.frame.size.height - self.target.center.y));
+    NSLog(@"Worst possible diff: %f, %f", worstPossibleDiff.x, worstPossibleDiff.y);
+    
+    CGPoint tapDiff = CGPointMake(tapLocation.x - self.target.center.x,
+                                  tapLocation.y - self.target.center.y);
+
+    CGPoint percentDiff = CGPointMake(1.0 - fabs(tapDiff.x / worstPossibleDiff.x),
+                                      1.0 - fabs(tapDiff.y / worstPossibleDiff.y));
+
+    NSLog(@"Percent Accuracy X: %%%.4f (%f / %f)", percentDiff.x*100.0, tapDiff.x, worstPossibleDiff.x);
+    NSLog(@"Percent Accuracy Y: %%%.4f (%f / %f)", percentDiff.y*100.0, tapDiff.y, worstPossibleDiff.y);
+    
+    double accuracyPercent = round(((percentDiff.x * 0.5) + (percentDiff.y * 0.5)) * 100.0);
+    
+    self.resultTimeLabel.text = [NSString stringWithFormat:@"Delay: %.0fms", round(fabs(timeDiff) * 1000.0)];
+    self.resultAccuracyLabel.text = [NSString stringWithFormat:@"Accuracy: %.0f%%", accuracyPercent];
+    
+    self.resultTimeLabel.hidden = NO;
+    self.resultAccuracyLabel.hidden = NO;
+    self.helpText.hidden = NO;
+    self.target.hidden = YES;
+
+    [timer invalidate];
+    timer = nil;
 }
 
 @end
