@@ -11,6 +11,8 @@
 
 @interface PKMainViewController ()
 
+@property (strong, nonatomic) NSString *lastEntryKey;
+
 @end
 
 @implementation PKMainViewController
@@ -135,7 +137,7 @@ CGPoint targetPosition;
     
     self.resultTimeLabel.hidden = NO;
     self.resultAccuracyLabel.hidden = NO;
-    self.helpText.hidden = NO;
+    // self.helpText.hidden = NO; // Keep help text hidden
     self.target.hidden = YES;
 
     [timer invalidate];
@@ -164,13 +166,24 @@ CGPoint targetPosition;
                                     @"overall": [NSNumber numberWithDouble:round(accuracyPercent * 10000.0) / 100.0],
                                 }
                               };
-        [[PKDataManager sharedManager] addEntryToQueue:entry withKey:[NSString stringWithFormat:@"%ld", (long)[NSDate.date timeIntervalSince1970]]];
+        self.lastEntryKey = [NSString stringWithFormat:@"%ld", (long)[NSDate.date timeIntervalSince1970]];
+        [[PKDataManager sharedManager] addEntryToQueue:entry withKey:self.lastEntryKey];
         [[PKDataManager sharedManager] scheduleSend];
+        self.deleteButton.hidden = NO;
     }
     
     // Schedule a notification for 45 minutes from now as a reminder
     [self scheduleNotification];
 }
+
+- (IBAction)deleteWasTapped:(id)sender
+{
+    self.deleteButton.hidden = YES;
+    self.resultAccuracyLabel.text = @"";
+    self.resultTimeLabel.text = @"";
+    [[PKDataManager sharedManager] deleteEntryFromQueue:self.lastEntryKey];
+}
+
 
 - (void)scheduleNotification
 {

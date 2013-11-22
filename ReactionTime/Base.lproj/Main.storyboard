@@ -55,12 +55,22 @@
                                 <color key="textColor" red="0.80000000000000004" green="0.30196078431372547" blue="0.30196078431372547" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="tap anywhere to begin" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yfk-Dh-Tun">
-                                <rect key="frame" x="75" y="527" width="171" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="tap anywhere to start" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yfk-Dh-Tun">
+                                <rect key="frame" x="75" y="527" width="163" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y0q-Eg-veC">
+                                <rect key="frame" x="20" y="522" width="44" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Delete">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="deleteWasTapped:" destination="rQl-PL-IFJ" eventType="touchUpInside" id="zWm-XV-teo"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -74,6 +84,7 @@
                     </view>
                     <connections>
                         <outlet property="countdownLabel" destination="dhn-kc-TgM" id="DG9-a8-sbS"/>
+                        <outlet property="deleteButton" destination="Y0q-Eg-veC" id="KUu-5f-RMQ"/>
                         <outlet property="helpText" destination="Yfk-Dh-Tun" id="PCM-BN-DqA"/>
                         <outlet property="resultAccuracyLabel" destination="QHE-wS-hEe" id="Fpr-UH-q1N"/>
                         <outlet property="resultTimeLabel" destination="a0c-q5-NuN" id="1h1-7z-esF"/>

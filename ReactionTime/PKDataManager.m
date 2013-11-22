@@ -90,6 +90,13 @@ AFHTTPSessionManager *_httpClient;
     }];
 }
 
+- (void)deleteEntryFromQueue:(NSString *)key
+{
+	[self.db accessCollection:PKCollectionQueueName withBlock:^(id<LOLDatabaseAccessor> accessor) {
+        [accessor removeDictionaryForKey:key];
+	}];
+}
+
 - (void)sendingStarted {
     self.sendInProgress = YES;
     [[NSNotificationCenter defaultCenter] postNotificationName:PKSendingStartedNotification object:self];

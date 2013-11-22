@@ -20,4 +20,7 @@
 
 - (void)wasTapped:(UITapGestureRecognizer *)sender;
 
+@property (strong, nonatomic) IBOutlet UIButton *deleteButton;
+- (IBAction)deleteWasTapped:(id)sender;
+
 @end
