@@ -16,6 +16,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *resultTimeLabel;
 @property (strong, nonatomic) IBOutlet UILabel *resultAccuracyLabel;
 
+@property (strong, nonatomic) IBOutlet UILabel *countdownLabel;
+
 - (IBAction)startTest:(id)sender;
 - (void)wasTapped:(UITapGestureRecognizer *)sender;
 

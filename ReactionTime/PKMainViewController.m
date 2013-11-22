@@ -23,6 +23,7 @@ CGPoint targetPosition;
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     self.target.hidden = YES;
+    self.countdownLabel.hidden = YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,6 +46,8 @@ CGPoint targetPosition;
     }
 }
 
+#pragma mark -
+
 - (IBAction)startTest:(id)sender
 {
     self.resultTimeLabel.hidden = YES;
@@ -52,10 +55,23 @@ CGPoint targetPosition;
     self.startBtn.hidden = YES;
     self.target.hidden = YES;
     
-    // Pick a random interval and wait that long to start the timer
-    NSTimeInterval randomInterval = 2.5;
-    targetDate = [NSDate dateWithTimeIntervalSinceNow:randomInterval];
-    timer = [NSTimer scheduledTimerWithTimeInterval:randomInterval target:self selector:@selector(activateButton) userInfo:nil repeats:NO];
+    self.countdownLabel.text = @"3";
+    self.countdownLabel.hidden = NO;
+    
+    targetDate = [NSDate dateWithTimeIntervalSinceNow:3.0];
+    timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerTick) userInfo:nil repeats:YES];
+}
+
+- (void)timerTick
+{
+    NSTimeInterval diff = [NSDate.date timeIntervalSinceDate:targetDate];
+    if(diff < 0) {
+        self.countdownLabel.text = [NSString stringWithFormat:@"%d", (int)(abs(round(diff)))];
+    } else {
+        self.countdownLabel.hidden = YES;
+        [timer invalidate];
+        [self activateButton];
+    }
 }
 
 - (void)activateButton
@@ -77,7 +93,6 @@ CGPoint targetPosition;
 - (void)wasTapped:(UITapGestureRecognizer *)sender
 {
     CGPoint loc = [sender locationInView:self.view];
-    NSLog(@"%f %f", loc.x, loc.y);
     [self targetWasTapped:loc];
 }
 
