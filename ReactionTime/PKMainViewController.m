@@ -14,6 +14,8 @@
 
 @implementation PKMainViewController
 
+NSDate *startDate;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -38,6 +40,18 @@
     if ([[segue identifier] isEqualToString:@"showAlternate"]) {
         [[segue destinationViewController] setDelegate:self];
     }
+}
+
+- (IBAction)startTimer:(id)sender
+{
+    NSLog(@"Start");
+    startDate = NSDate.date;
+}
+
+- (IBAction)endTimer:(id)sender
+{
+    NSLog(@"End");
+    NSLog(@"%f", [NSDate.date timeIntervalSinceDate:startDate]);
 }
 
 @end

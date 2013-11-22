@@ -10,4 +10,10 @@
 
 @interface PKMainViewController : UIViewController <PKFlipsideViewControllerDelegate>
 
+@property (strong, nonatomic) IBOutlet UIButton *startBtn;
+@property (strong, nonatomic) IBOutlet UIButton *tapBtn;
+
+- (IBAction)startTimer:(id)sender;
+- (IBAction)endTimer:(id)sender;
+
 @end
