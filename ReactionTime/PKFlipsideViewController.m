@@ -21,6 +21,30 @@
 	// Do any additional setup after loading the view, typically from a nib.
     self.apiEndpointField.text = [[NSUserDefaults standardUserDefaults] stringForKey:PKAPIEndpointDefaultsName];
     self.saveSwitch.on = [[NSUserDefaults standardUserDefaults] boolForKey:PKSaveResultsDefaultsName];
+    self.entriesInQueueLabel.text = @"";
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [self.sendingIndicator stopAnimating];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(sendingStarted)
+												 name:PKSendingStartedNotification
+											   object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(sendingFinished)
+												 name:PKSendingFinishedNotification
+											   object:nil];
+    [self refreshQueueCount];
+}
+
+- (void)refreshQueueCount
+{
+    [[PKDataManager sharedManager] numberOfLocationsInQueue:^(long num) {
+        self.entriesInQueueLabel.text = [NSString stringWithFormat:@"%ld unsent entries", num];
+    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -56,6 +80,23 @@
     [[UIApplication sharedApplication] openURL:url];
     
 }
+
+- (IBAction)sendNowWasTapped:(id)sender
+{
+    [[PKDataManager sharedManager] sendQueueNow];
+}
+
+- (void)sendingStarted {
+    [self.sendingIndicator startAnimating];
+    self.sendNowButton.enabled = NO;
+}
+
+- (void)sendingFinished {
+    [self.sendingIndicator stopAnimating];
+    self.sendNowButton.enabled = YES;
+    [self refreshQueueCount];
+}
+
 
 #pragma mark - Flip
 

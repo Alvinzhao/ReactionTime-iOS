@@ -10,7 +10,19 @@
 
 static NSString *const PKAPIEndpointDefaultsName = @"PKAPIEndpointDefaults";
 static NSString *const PKSaveResultsDefaultsName = @"PKSaveResultsDefaults";
+static NSString *const PKSendingStartedNotification = @"PKSendingStartedNotification";
+static NSString *const PKSendingFinishedNotification = @"PKSendingFinishedNotification";
 
 @interface PKDataManager : NSObject
+
++ (PKDataManager *)sharedManager;
+
+@property (readonly) BOOL sendInProgress;
+@property (strong, nonatomic, readonly) NSDate *lastSentDate;
+
+- (void)addEntryToQueue:(NSDictionary *)data withKey:(NSString *)key;
+- (void)numberOfLocationsInQueue:(void(^)(long num))callback;
+- (void)scheduleSend;
+- (void)sendQueueNow;
 
 @end

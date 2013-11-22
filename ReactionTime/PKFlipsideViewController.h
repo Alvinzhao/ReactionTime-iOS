@@ -20,11 +20,17 @@
 - (IBAction)done:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UISwitch *saveSwitch;
+- (IBAction)saveSwitchChanged:(id)sender;
+
 @property (strong, nonatomic) IBOutlet UITextField *apiEndpointField;
 - (IBAction)apiEndpointEditingBegan:(id)sender;
 - (IBAction)apiEndpointValueChanged:(id)sender;
 - (IBAction)apiEndpointHelpTapped:(id)sender;
-- (IBAction)saveSwitchChanged:(id)sender;
+
+@property (strong, nonatomic) IBOutlet UILabel *entriesInQueueLabel;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *sendingIndicator;
+@property (strong, nonatomic) IBOutlet UIButton *sendNowButton;
+- (IBAction)sendNowWasTapped:(id)sender;
 
 @end
 

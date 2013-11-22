@@ -153,6 +153,26 @@
                                     <action selector="apiEndpointHelpTapped:" destination="kIf-nA-PKG" eventType="touchUpInside" id="ahu-K5-Ij4"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pKh-wT-IZY">
+                                <rect key="frame" x="226" y="220" width="72" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Send Now">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="sendNowWasTapped:" destination="kIf-nA-PKG" eventType="touchUpInside" id="bL4-lV-NDQ"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="2 unsent entries" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JDn-JP-gir">
+                                <rect key="frame" x="20" y="224" width="164" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="OZg-M6-cKa">
+                                <rect key="frame" x="192" y="224" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -163,7 +183,10 @@
                     </view>
                     <connections>
                         <outlet property="apiEndpointField" destination="cRQ-aG-dt0" id="2TL-dI-eCT"/>
+                        <outlet property="entriesInQueueLabel" destination="JDn-JP-gir" id="VEf-ny-chu"/>
                         <outlet property="saveSwitch" destination="o1L-mr-eo2" id="SEC-nu-MNC"/>
+                        <outlet property="sendNowButton" destination="pKh-wT-IZY" id="RXa-7Z-W3y"/>
+                        <outlet property="sendingIndicator" destination="OZg-M6-cKa" id="02I-qj-om8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xlJ-1o-FvB" sceneMemberID="firstResponder"/>

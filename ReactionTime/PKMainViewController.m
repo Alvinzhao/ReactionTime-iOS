@@ -7,6 +7,7 @@
 //
 
 #import "PKMainViewController.h"
+#import "PKDataManager.h"
 
 @interface PKMainViewController ()
 
@@ -111,22 +112,23 @@ CGPoint targetPosition;
 
     NSTimeInterval timeDiff = [NSDate.date timeIntervalSinceDate:targetDate];
     NSLog(@"Time Diff: %.0fms", timeDiff * 1000.0);
-    NSLog(@"Location Diff: %.0f, %.0f", tapLocation.x - self.target.center.x, tapLocation.y - self.target.center.y);
+
+    CGPoint tapDiff = CGPointMake(tapLocation.x - self.target.center.x,
+                                  tapLocation.y - self.target.center.y);
+    
+    NSLog(@"Location Diff: %.0f, %.0f", tapDiff.x, tapDiff.y);
 
     CGPoint worstPossibleDiff = CGPointMake(MAX(self.target.center.x, self.view.frame.size.width - self.target.center.x),
                                             MAX(self.target.center.y, self.view.frame.size.height - self.target.center.y));
     NSLog(@"Worst possible diff: %f, %f", worstPossibleDiff.x, worstPossibleDiff.y);
     
-    CGPoint tapDiff = CGPointMake(tapLocation.x - self.target.center.x,
-                                  tapLocation.y - self.target.center.y);
-
     CGPoint percentDiff = CGPointMake(1.0 - fabs(tapDiff.x / worstPossibleDiff.x),
                                       1.0 - fabs(tapDiff.y / worstPossibleDiff.y));
 
     NSLog(@"Percent Accuracy X: %%%.4f (%f / %f)", percentDiff.x*100.0, tapDiff.x, worstPossibleDiff.x);
     NSLog(@"Percent Accuracy Y: %%%.4f (%f / %f)", percentDiff.y*100.0, tapDiff.y, worstPossibleDiff.y);
     
-    double accuracyPercent = round(((percentDiff.x * 0.5) + (percentDiff.y * 0.5)) * 100.0);
+    double accuracyPercent = ((percentDiff.x * 0.5) + (percentDiff.y * 0.5)) * 100.0;
     
     self.resultTimeLabel.text = [NSString stringWithFormat:@"Delay: %.0fms", round(fabs(timeDiff) * 1000.0)];
     self.resultAccuracyLabel.text = [NSString stringWithFormat:@"Accuracy: %.0f%%", accuracyPercent];
@@ -138,6 +140,31 @@ CGPoint targetPosition;
 
     [timer invalidate];
     timer = nil;
+    
+    // Add to the database
+    NSDictionary *entry = @{
+                            @"timestamp": [NSNumber numberWithLong:(long)[NSDate.date timeIntervalSince1970]],
+                            @"delay": [NSNumber numberWithDouble:round(timeDiff * 1000.0)],
+                            @"tap_diff": @{
+                                @"x": [NSNumber numberWithFloat:round(tapDiff.x)],
+                                @"y": [NSNumber numberWithFloat:round(tapDiff.y)],
+                            },
+                            @"tap_location": @{
+                                @"x": [NSNumber numberWithFloat:round(tapLocation.x)],
+                                @"y": [NSNumber numberWithFloat:round(tapLocation.y)],
+                            },
+                            @"target_location": @{
+                                @"x": [NSNumber numberWithFloat:round(self.target.center.x)],
+                                @"y": [NSNumber numberWithFloat:round(self.target.center.y)],
+                            },
+                            @"percent": @{
+                                @"x": [NSNumber numberWithDouble:round(percentDiff.x * 10000.0) / 100.0],
+                                @"y": [NSNumber numberWithDouble:round(percentDiff.y * 10000.0) / 100.0],
+                                @"overall": [NSNumber numberWithDouble:round(accuracyPercent * 10000.0) / 100.0],
+                            }
+                          };
+    [[PKDataManager sharedManager] addEntryToQueue:entry withKey:[NSString stringWithFormat:@"%ld", (long)[NSDate.date timeIntervalSince1970]]];
+    [[PKDataManager sharedManager] scheduleSend];
 }
 
 @end

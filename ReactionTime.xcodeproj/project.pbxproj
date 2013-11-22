@@ -234,6 +234,13 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Aaron Parecki";
 				TargetAttributes = {
+					0FE45ECB183F79D80004E2D1 = {
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
+					};
 					0FE45EEF183F79D80004E2D1 = {
 						TestTargetID = 0FE45ECB183F79D80004E2D1;
 					};
