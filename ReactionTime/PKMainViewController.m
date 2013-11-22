@@ -145,8 +145,15 @@ CGPoint targetPosition;
     
     if([[NSUserDefaults standardUserDefaults] boolForKey:PKSaveResultsDefaultsName]) {
         // Add to the database
+        NSTimeZone *tz = [NSTimeZone localTimeZone];
         NSDictionary *entry = @{
                                 @"timestamp": [NSNumber numberWithLong:(long)[NSDate.date timeIntervalSince1970]],
+                                @"date": @"", // TODO
+                                @"timezone": @{
+                                    @"offset": [NSNumber numberWithInteger:tz.secondsFromGMT],
+                                    @"abbr": tz.abbreviation,
+                                    @"name": tz.name,
+                                },
                                 @"delay": [NSNumber numberWithDouble:round(timeDiff * 1000.0)],
                                 @"tap_diff": @{
                                     @"x": [NSNumber numberWithFloat:round(tapDiff.x)],
