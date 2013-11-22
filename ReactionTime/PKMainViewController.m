@@ -141,30 +141,32 @@ CGPoint targetPosition;
     [timer invalidate];
     timer = nil;
     
-    // Add to the database
-    NSDictionary *entry = @{
-                            @"timestamp": [NSNumber numberWithLong:(long)[NSDate.date timeIntervalSince1970]],
-                            @"delay": [NSNumber numberWithDouble:round(timeDiff * 1000.0)],
-                            @"tap_diff": @{
-                                @"x": [NSNumber numberWithFloat:round(tapDiff.x)],
-                                @"y": [NSNumber numberWithFloat:round(tapDiff.y)],
-                            },
-                            @"tap_location": @{
-                                @"x": [NSNumber numberWithFloat:round(tapLocation.x)],
-                                @"y": [NSNumber numberWithFloat:round(tapLocation.y)],
-                            },
-                            @"target_location": @{
-                                @"x": [NSNumber numberWithFloat:round(self.target.center.x)],
-                                @"y": [NSNumber numberWithFloat:round(self.target.center.y)],
-                            },
-                            @"percent": @{
-                                @"x": [NSNumber numberWithDouble:round(percentDiff.x * 10000.0) / 100.0],
-                                @"y": [NSNumber numberWithDouble:round(percentDiff.y * 10000.0) / 100.0],
-                                @"overall": [NSNumber numberWithDouble:round(accuracyPercent * 10000.0) / 100.0],
-                            }
-                          };
-    [[PKDataManager sharedManager] addEntryToQueue:entry withKey:[NSString stringWithFormat:@"%ld", (long)[NSDate.date timeIntervalSince1970]]];
-    [[PKDataManager sharedManager] scheduleSend];
+    if([[NSUserDefaults standardUserDefaults] boolForKey:PKSaveResultsDefaultsName]) {
+        // Add to the database
+        NSDictionary *entry = @{
+                                @"timestamp": [NSNumber numberWithLong:(long)[NSDate.date timeIntervalSince1970]],
+                                @"delay": [NSNumber numberWithDouble:round(timeDiff * 1000.0)],
+                                @"tap_diff": @{
+                                    @"x": [NSNumber numberWithFloat:round(tapDiff.x)],
+                                    @"y": [NSNumber numberWithFloat:round(tapDiff.y)],
+                                },
+                                @"tap_location": @{
+                                    @"x": [NSNumber numberWithFloat:round(tapLocation.x)],
+                                    @"y": [NSNumber numberWithFloat:round(tapLocation.y)],
+                                },
+                                @"target_location": @{
+                                    @"x": [NSNumber numberWithFloat:round(self.target.center.x)],
+                                    @"y": [NSNumber numberWithFloat:round(self.target.center.y)],
+                                },
+                                @"percent": @{
+                                    @"x": [NSNumber numberWithDouble:round(percentDiff.x * 10000.0) / 100.0],
+                                    @"y": [NSNumber numberWithDouble:round(percentDiff.y * 10000.0) / 100.0],
+                                    @"overall": [NSNumber numberWithDouble:round(accuracyPercent * 10000.0) / 100.0],
+                                }
+                              };
+        [[PKDataManager sharedManager] addEntryToQueue:entry withKey:[NSString stringWithFormat:@"%ld", (long)[NSDate.date timeIntervalSince1970]]];
+        [[PKDataManager sharedManager] scheduleSend];
+    }
 }
 
 @end
