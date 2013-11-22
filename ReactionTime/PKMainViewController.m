@@ -194,6 +194,7 @@ CGPoint targetPosition;
 
 - (void)scheduleNotification
 {
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
     UILocalNotification* localNotification = [[UILocalNotification alloc] init];
     localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:60*45];
     localNotification.alertBody = @"Ping!";
