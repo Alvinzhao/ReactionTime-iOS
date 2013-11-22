@@ -12,8 +12,9 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *startBtn;
 @property (strong, nonatomic) IBOutlet UIButton *tapBtn;
+@property (strong, nonatomic) IBOutlet UILabel *resultsLabel;
 
-- (IBAction)startTimer:(id)sender;
+- (IBAction)startTest:(id)sender;
 - (IBAction)endTimer:(id)sender;
 
 @end
