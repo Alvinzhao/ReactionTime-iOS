@@ -167,6 +167,18 @@ CGPoint targetPosition;
         [[PKDataManager sharedManager] addEntryToQueue:entry withKey:[NSString stringWithFormat:@"%ld", (long)[NSDate.date timeIntervalSince1970]]];
         [[PKDataManager sharedManager] scheduleSend];
     }
+    
+    // Schedule a notification for 45 minutes from now as a reminder
+    [self scheduleNotification];
+}
+
+- (void)scheduleNotification
+{
+    UILocalNotification* localNotification = [[UILocalNotification alloc] init];
+    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:60*45];
+    localNotification.alertBody = @"Ping!";
+    localNotification.timeZone = [NSTimeZone defaultTimeZone];
+    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
 }
 
 @end

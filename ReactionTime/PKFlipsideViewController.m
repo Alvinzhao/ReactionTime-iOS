@@ -42,7 +42,7 @@
 
 - (void)refreshQueueCount
 {
-    [[PKDataManager sharedManager] numberOfLocationsInQueue:^(long num) {
+    [[PKDataManager sharedManager] numberOfEntriesInQueue:^(long num) {
         self.entriesInQueueLabel.text = [NSString stringWithFormat:@"%ld unsent entries", num];
     }];
 }

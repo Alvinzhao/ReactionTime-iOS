@@ -84,7 +84,7 @@ AFHTTPSessionManager *_httpClient;
 	}];
 }
 
-- (void)numberOfLocationsInQueue:(void(^)(long num))callback {
+- (void)numberOfEntriesInQueue:(void(^)(long num))callback {
     [self.db accessCollection:PKCollectionQueueName withBlock:^(id<LOLDatabaseAccessor> accessor) {
         [accessor countObjectsUsingBlock:callback];
     }];
@@ -122,8 +122,28 @@ AFHTTPSessionManager *_httpClient;
 }
 
 - (void)sendQueueNow {
-    [self sendingStarted];
+
+    __block long numEntries;
+    [self numberOfEntriesInQueue:^(long num) {
+        if(num == 0) {
+            numEntries = num;
+        }
+    }];
     
+    if(numEntries == 0) {
+        NSLog(@"Nothing in the queue");
+        return;
+    }
+
+    NSString *endpoint = [[NSUserDefaults standardUserDefaults] stringForKey:PKAPIEndpointDefaultsName];
+    
+    if(endpoint == nil || [endpoint isEqualToString:@""]) {
+        NSLog(@"No endpoint configured");
+        return;
+    }
+
+    NSLog(@"Endpoint: %@", endpoint);
+
     NSMutableSet *syncedEntries = [NSMutableSet set];
     NSMutableArray *entries = [NSMutableArray array];
     
@@ -137,15 +157,11 @@ AFHTTPSessionManager *_httpClient;
         
     }];
     
-    if(entries.count == 0) {
-        [self sendingFinished];
-        return;
-    }
+
+    [self sendingStarted];
     
     NSDictionary *postData = @{@"entries": entries};
     
-    NSString *endpoint = [[NSUserDefaults standardUserDefaults] stringForKey:PKAPIEndpointDefaultsName];
-    NSLog(@"Endpoint: %@", endpoint);
     NSLog(@"Entries in post: %lu", (unsigned long)entries.count);
     
     [_httpClient POST:endpoint parameters:postData success:^(NSURLSessionDataTask *task, id responseObject) {

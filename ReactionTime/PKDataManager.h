@@ -21,7 +21,7 @@ static NSString *const PKSendingFinishedNotification = @"PKSendingFinishedNotifi
 @property (strong, nonatomic, readonly) NSDate *lastSentDate;
 
 - (void)addEntryToQueue:(NSDictionary *)data withKey:(NSString *)key;
-- (void)numberOfLocationsInQueue:(void(^)(long num))callback;
+- (void)numberOfEntriesInQueue:(void(^)(long num))callback;
 - (void)scheduleSend;
 - (void)sendQueueNow;
 
