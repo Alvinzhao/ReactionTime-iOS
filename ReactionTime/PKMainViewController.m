@@ -61,6 +61,7 @@ CGPoint targetPosition;
     self.resultAccuracyLabel.hidden = YES;
     self.helpText.hidden = YES;
     self.target.hidden = YES;
+    self.backgroundImage.hidden = YES;
     
     self.countdownLabel.text = @"3";
     self.countdownLabel.hidden = NO;
@@ -142,6 +143,8 @@ CGPoint targetPosition;
     self.resultAccuracyLabel.hidden = NO;
     // self.helpText.hidden = NO; // Keep help text hidden
     self.target.hidden = YES;
+
+    self.backgroundImage.hidden = NO;
 
     [timer invalidate];
     timer = nil;

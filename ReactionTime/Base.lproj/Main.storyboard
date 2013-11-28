@@ -16,6 +16,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="tJ4-6b-O0z">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jqg-sy-dxO">
                                 <rect key="frame" x="278" y="526" width="22" height="22"/>
                                 <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
@@ -83,6 +87,7 @@
                         </connections>
                     </view>
                     <connections>
+                        <outlet property="backgroundImage" destination="tJ4-6b-O0z" id="cbF-zh-PmP"/>
                         <outlet property="countdownLabel" destination="dhn-kc-TgM" id="DG9-a8-sbS"/>
                         <outlet property="deleteButton" destination="Y0q-Eg-veC" id="KUu-5f-RMQ"/>
                         <outlet property="helpText" destination="Yfk-Dh-Tun" id="PCM-BN-DqA"/>
@@ -220,6 +225,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Background" width="320" height="568"/>
         <image name="Target" width="80" height="80"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

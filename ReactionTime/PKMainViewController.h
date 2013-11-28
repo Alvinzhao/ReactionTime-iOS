@@ -23,4 +23,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *deleteButton;
 - (IBAction)deleteWasTapped:(id)sender;
 
+@property (strong, nonatomic) IBOutlet UIImageView *backgroundImage;
+
 @end
