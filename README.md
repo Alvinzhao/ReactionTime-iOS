@@ -6,7 +6,7 @@
 
 `pod install`
 
-`open PushupCounter.xcworkspace`
+`open ReactionTime.xcworkspace`
 
 ### How to Use
 
@@ -50,6 +50,14 @@ Here is a sample post request that is sent from the app.
         "x": 95.48,
         "y": 95.15,
         "overall": 9531.56
+      },
+      "geo_location": {
+        "latitude": 37.33065347,
+        "longitude": -122.02950551,
+        "accuracy": 10,
+        "altitude": 0,
+        "speed": 3,
+        "timestamp": 1385657753
       }
     }
   ]
