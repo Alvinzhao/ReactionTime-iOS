@@ -137,6 +137,19 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OxJ-sE-FN9">
+                                <rect key="frame" x="249" y="284" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="saveLocationSwitchChanged:" destination="kIf-nA-PKG" eventType="valueChanged" id="DYP-5S-282"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Save Location" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h0U-gy-c9X">
+                                <rect key="frame" x="18" y="289" width="119" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="cRQ-aG-dt0">
                                 <rect key="frame" x="20" y="189" width="280" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -195,6 +208,7 @@
                     <connections>
                         <outlet property="apiEndpointField" destination="cRQ-aG-dt0" id="2TL-dI-eCT"/>
                         <outlet property="entriesInQueueLabel" destination="JDn-JP-gir" id="VEf-ny-chu"/>
+                        <outlet property="saveLocationSwitch" destination="OxJ-sE-FN9" id="w6n-n0-LLC"/>
                         <outlet property="saveSwitch" destination="o1L-mr-eo2" id="SEC-nu-MNC"/>
                         <outlet property="sendNowButton" destination="pKh-wT-IZY" id="RXa-7Z-W3y"/>
                         <outlet property="sendingIndicator" destination="OZg-M6-cKa" id="02I-qj-om8"/>

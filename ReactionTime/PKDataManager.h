@@ -7,18 +7,26 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 
 static NSString *const PKAPIEndpointDefaultsName = @"PKAPIEndpointDefaults";
 static NSString *const PKSaveResultsDefaultsName = @"PKSaveResultsDefaults";
+static NSString *const PKSaveLocationDefaultsName = @"PKSaveLocationDefaults";
 static NSString *const PKSendingStartedNotification = @"PKSendingStartedNotification";
 static NSString *const PKSendingFinishedNotification = @"PKSendingFinishedNotification";
 
-@interface PKDataManager : NSObject
+@interface PKDataManager : NSObject <CLLocationManagerDelegate>
 
 + (PKDataManager *)sharedManager;
 
 @property (readonly) BOOL sendInProgress;
 @property (strong, nonatomic, readonly) NSDate *lastSentDate;
+
+@property (strong, nonatomic, readonly) CLLocationManager *locationManager;
+@property (strong, nonatomic, readonly) CLLocation *lastLocation;
+
+// Call this when you know you will be recording a data point soon, such as when the user loads the interface
+- (void)requestLocation;
 
 - (void)addEntryToQueue:(NSDictionary *)data withKey:(NSString *)key;
 - (void)numberOfEntriesInQueue:(void(^)(long num))callback;

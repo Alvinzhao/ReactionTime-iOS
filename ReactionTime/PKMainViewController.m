@@ -30,6 +30,7 @@ CGPoint targetPosition;
     self.resultAccuracyLabel.hidden = YES;
     self.resultTimeLabel.hidden = YES;
     self.helpText.hidden = NO;
+    [[PKDataManager sharedManager] requestLocation];
 }
 
 - (void)didReceiveMemoryWarning
@@ -66,6 +67,8 @@ CGPoint targetPosition;
     
     targetDate = [NSDate dateWithTimeIntervalSinceNow:3.0];
     timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerTick) userInfo:nil repeats:YES];
+    
+    [[PKDataManager sharedManager] requestLocation];
 }
 
 - (void)timerTick
@@ -145,6 +148,18 @@ CGPoint targetPosition;
     
     if([[NSUserDefaults standardUserDefaults] boolForKey:PKSaveResultsDefaultsName]) {
         // Add to the database
+        
+        NSMutableDictionary *userLocation = [[NSMutableDictionary alloc] init];
+        CLLocation *loc;
+        if((loc=[PKDataManager sharedManager].lastLocation)) {
+            [userLocation setValue:[NSNumber numberWithDouble:loc.coordinate.latitude] forKey:@"latitude"];
+            [userLocation setValue:[NSNumber numberWithDouble:loc.coordinate.longitude] forKey:@"longitude"];
+            [userLocation setValue:[NSNumber numberWithInt:(int)round(loc.altitude)] forKey:@"altitude"];
+            [userLocation setValue:[NSNumber numberWithDouble:(int)round(loc.speed)] forKey:@"speed"];
+            [userLocation setValue:[NSNumber numberWithInt:(int)round(loc.horizontalAccuracy)] forKey:@"accuracy"];
+            [userLocation setValue:[NSNumber numberWithInt:(int)[loc.timestamp timeIntervalSince1970]] forKey:@"timestamp"];
+        }
+        
         NSTimeZone *tz = [NSTimeZone localTimeZone];
         NSDictionary *entry = @{
                                 @"timestamp": [NSNumber numberWithLong:(long)[NSDate.date timeIntervalSince1970]],
@@ -171,7 +186,8 @@ CGPoint targetPosition;
                                     @"x": [NSNumber numberWithDouble:round(percentDiff.x * 10000.0) / 100.0],
                                     @"y": [NSNumber numberWithDouble:round(percentDiff.y * 10000.0) / 100.0],
                                     @"overall": [NSNumber numberWithDouble:round(accuracyPercent * 10000.0) / 100.0],
-                                }
+                                },
+                                @"geo_location": userLocation
                               };
         self.lastEntryKey = [NSString stringWithFormat:@"%ld", (long)[NSDate.date timeIntervalSince1970]];
         [[PKDataManager sharedManager] addEntryToQueue:entry withKey:self.lastEntryKey];

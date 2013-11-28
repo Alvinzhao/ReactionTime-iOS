@@ -21,6 +21,7 @@
 	// Do any additional setup after loading the view, typically from a nib.
     self.apiEndpointField.text = [[NSUserDefaults standardUserDefaults] stringForKey:PKAPIEndpointDefaultsName];
     self.saveSwitch.on = [[NSUserDefaults standardUserDefaults] boolForKey:PKSaveResultsDefaultsName];
+    self.saveLocationSwitch.on = [[NSUserDefaults standardUserDefaults] boolForKey:PKSaveLocationDefaultsName];
     self.entriesInQueueLabel.text = @"";
 }
 
@@ -72,6 +73,13 @@
     [[NSUserDefaults standardUserDefaults] setBool:self.saveSwitch.isOn forKey:PKSaveResultsDefaultsName];
     [[NSUserDefaults standardUserDefaults] synchronize];
     NSLog(@"State: %d", self.saveSwitch.isOn);
+}
+
+- (IBAction)saveLocationSwitchChanged:(id)sender
+{
+    [[NSUserDefaults standardUserDefaults] setBool:self.saveLocationSwitch.isOn forKey:PKSaveLocationDefaultsName];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    NSLog(@"State: %d", self.saveLocationSwitch.isOn);
 }
 
 - (IBAction)apiEndpointHelpTapped:(id)sender

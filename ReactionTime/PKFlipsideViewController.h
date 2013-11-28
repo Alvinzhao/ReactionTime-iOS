@@ -32,5 +32,8 @@
 @property (strong, nonatomic) IBOutlet UIButton *sendNowButton;
 - (IBAction)sendNowWasTapped:(id)sender;
 
+@property (strong, nonatomic) IBOutlet UISwitch *saveLocationSwitch;
+- (IBAction)saveLocationSwitchChanged:(id)sender;
+
 @end
 

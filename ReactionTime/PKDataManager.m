@@ -16,6 +16,11 @@
 @property (strong, nonatomic) NSDate *lastSentDate;
 @property (strong, nonatomic) NSTimer *scheduleSendTimer;
 
+@property (strong, nonatomic) CLLocationManager *locationManager;
+@property (strong, nonatomic) CLLocation *lastLocation;
+@property (strong, nonatomic) NSDate *startedLocationRequestDate;
+@property (strong, nonatomic) NSTimer *locationRequestTimer;
+
 @property (strong, nonatomic) LOLDatabase *db;
 
 @end
@@ -54,6 +59,18 @@ AFHTTPSessionManager *_httpClient;
     _httpClient = [[AFHTTPSessionManager manager] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@://%@", endpoint.scheme, endpoint.host]]];
     _httpClient.requestSerializer = [AFJSONRequestSerializer serializer];
     _httpClient.responseSerializer = [AFJSONResponseSerializer serializer];
+}
+
+- (CLLocationManager *)locationManager {
+    if (!_locationManager) {
+        _locationManager = [[CLLocationManager alloc] init];
+        _locationManager.delegate = self;
+        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        _locationManager.distanceFilter = 1;
+        _locationManager.pausesLocationUpdatesAutomatically = YES;
+    }
+    
+    return _locationManager;
 }
 
 #pragma mark LOLDB
@@ -201,6 +218,50 @@ AFHTTPSessionManager *_httpClient;
     }];
     
 }
+
+#pragma mark - Location
+
+// Gets one location fix (with greater accuracy than 200m) and then stops
+- (void)requestLocation
+{
+    if([[NSUserDefaults standardUserDefaults] boolForKey:PKSaveLocationDefaultsName]) {
+        [self.locationManager startUpdatingLocation];
+        self.startedLocationRequestDate = NSDate.date;
+        self.locationRequestTimer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(locationRequestTimedOut) userInfo:nil repeats:NO];
+    }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    CLLocation *location = (CLLocation *)locations[0];
+    if(location.horizontalAccuracy < 200) {
+        // If the accuracy is good enough, store in lastLocation and stop updating
+        self.lastLocation = location;
+        [self.locationManager stopUpdatingLocation];
+        [self.locationRequestTimer invalidate];
+        self.locationRequestTimer = nil;
+        NSLog(@"Got location fix: %@", location);
+    }
+
+    if([self.startedLocationRequestDate timeIntervalSinceNow] >= 30) {
+        [self.locationManager stopUpdatingLocation];
+        self.startedLocationRequestDate = nil;
+        [self.locationRequestTimer invalidate];
+        self.locationRequestTimer = nil;
+        NSLog(@"Location acquisition timed out");
+    }
+}
+
+- (void)locationRequestTimedOut
+{
+    // Time out after 30 seconds of trying to get a fix
+    [self.locationManager stopUpdatingLocation];
+    self.startedLocationRequestDate = nil;
+    [self.locationRequestTimer invalidate];
+    self.locationRequestTimer = nil;
+    NSLog(@"Location acquisition timed out");
+}
+
 
 #pragma mark -
 
