@@ -134,10 +134,10 @@ CGPoint targetPosition;
     NSLog(@"Percent Accuracy X: %%%.4f (%f / %f)", percentDiff.x*100.0, tapDiff.x, worstPossibleDiff.x);
     NSLog(@"Percent Accuracy Y: %%%.4f (%f / %f)", percentDiff.y*100.0, tapDiff.y, worstPossibleDiff.y);
     
-    double accuracyPercent = ((percentDiff.x * 0.5) + (percentDiff.y * 0.5)) * 100.0;
+    double accuracyPercent = (percentDiff.x * 0.5) + (percentDiff.y * 0.5);
     
     self.resultTimeLabel.text = [NSString stringWithFormat:@"Delay: %.0fms", round(fabs(timeDiff) * 1000.0)];
-    self.resultAccuracyLabel.text = [NSString stringWithFormat:@"Accuracy: %.0f%%", accuracyPercent];
+    self.resultAccuracyLabel.text = [NSString stringWithFormat:@"Accuracy: %.1f%%", accuracyPercent * 100.0];
     
     self.resultTimeLabel.hidden = NO;
     self.resultAccuracyLabel.hidden = NO;
